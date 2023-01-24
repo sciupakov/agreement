@@ -3,8 +3,7 @@
     'version': '16.0',
     'depends': ['base'],
     'author': "Andrej Ščiupakov",
-    'category': 'Category',
-    'license': 'GPL-3',
+    'license': 'AGPL-3',
     'description': """
     Test task module
     """,
