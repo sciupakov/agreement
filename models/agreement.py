@@ -8,20 +8,24 @@ class Agreement(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = "Agreement"
 
-    number = fields.Char(string='Agreement number', required=True, readonly=True, default=lambda self: _('New'))
-    partner_id = fields.Many2one('res.partner', string='Partner', required=True)
-    kind_id = fields.Many2one('agreement.type', string='Agreement type', required=True)
+    number = fields.Char(string='Agreement number',
+                         required=True,
+                         readonly=True,
+                         tracking=True,
+                         default=lambda self: self.env['ir.sequence'].next_by_code('agreement.number'))
+    partner_id = fields.Many2one('res.partner', string='Partner', required=True, tracking=True)
+    kind_id = fields.Many2one('agreement.type', string='Agreement type', required=True, tracking=True)
     state = fields.Selection([
         ('draft', 'Draft'),
         ('in_agreement', 'In agreement'),
         ('active', 'Active'),
         ('finished', 'Finished')],
-        string='State', default='draft', required=True)
-    start_date = fields.Date(string='Start date', required=True)
-    end_date = fields.Date(string='End date', required=True)
-    author_id = fields.Many2one('res.users', string='Author', default=lambda self: self.env.user)
+        string='State', default='draft', required=True, tracking=True)
+    start_date = fields.Date(string='Start date', required=True, tracking=True)
+    end_date = fields.Date(string='End date', required=True, tracking=True)
+    author_id = fields.Many2one('res.users', string='Author', tracking=True, default=lambda self: self.env.user)
 
-    current_uid = fields.Many2one('res.users', compute='get_current_uid', string='Current user id')
+    show_button = fields.Boolean(compute='_compute_show_button', string='Show button', readonly=True)
 
     def get_current_uid(self):
         if self.env.context.get('uid', False):
@@ -30,23 +34,27 @@ class Agreement(models.Model):
         else:
             self.current_uid = False
 
-    '''Agreement number is generated from ir.sequence here'''
-
-    @api.model_create_multi
-    def create(self, vals_list):
-        for vals in vals_list:
-            if not vals.get('number') or vals['number'] == _('New'):
-                vals['number'] = self.env['ir.sequence'].next_by_code('agreement.number') or _('New')
-        return super(Agreement, self).create(vals_list)
-
     def action_send_for_approval(self):
         self.ensure_one()
-        self.sudo().state = 'in_agreement'
+        self.state = 'in_agreement'
 
     def action_approve(self):
         self.ensure_one()
-        self.sudo().state = 'active'
+        self.state = 'active'
 
     def action_send_back(self):
         self.ensure_one()
-        self.sudo().state = 'draft'
+        self.state = 'draft'
+        # send notification to author
+        self.message_post(body=_('Agreement %s was sent back for revision.'))
+
+    @api.depends('author_id', 'state')
+    def _compute_show_button(self):
+        for rec in self:
+            rec.show_button = self.env.user.id == rec.author_id.id and rec.state == 'draft'
+
+    def _finish_agreements(self):
+        # This method is called from cron job
+        agreements = self.search([('state', '=', 'active'), ('end_date', '<', fields.Date.today())])
+        if agreements:
+            agreements.write({'state': 'finished'})

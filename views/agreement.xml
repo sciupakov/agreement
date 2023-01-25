@@ -25,7 +25,7 @@
                     <button name="action_send_for_approval"
                             string="Send for approval"
                             type="object"
-                            attrs="{'invisible': [('state', '!=', 'draft'), ('author_id', '!=', 'current_uid')]}"/>
+                            attrs="{'invisible': [('show_button', '!=', True)]}"/>
                     <button name="action_approve" string="Approve"
                             type="object"
                             attrs="{'invisible': [('state', '!=', 'in_agreement')]}"
@@ -39,14 +39,12 @@
                 </header>
                 <sheet>
                     <group>
-                        <field name="number"/>
-                        <field name="partner_id"/>
-                        <field name="kind_id"/>
-                        <field name="state"/>
-                        <field name="start_date"/>
-                        <field name="end_date"/>
-                        <field name="author_id"/>
-                        <field name="current_uid"/>
+                        <field name="number" attrs="{'readonly':True}"/>
+                        <field name="partner_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="kind_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="start_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="end_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="author_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                     </group>
                 </sheet>
                 <div class="oe_chatter">

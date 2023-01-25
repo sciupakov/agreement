@@ -8,15 +8,15 @@
         <field name="name">Agreement Manager</field>
     </record>
 
-    <record id="agreement_allow_editing_draft_only" model="ir.rule">
-        <field name="name">Allowing to edit agreement in draft state only</field>
-        <field name="model_id" ref="model_agreement"/>
-        <field name="domain_force">
-            [('state', '=', 'draft')]</field>
-        <field name="perm_create" eval="False"/>
-        <field name="perm_write" eval="True"/>
-        <field name="perm_unlink" eval="False"/>
-        <field name="perm_read" eval="False"/>
-        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
-    </record>
+<!--    <record id="agreement_allow_editing_draft_only" model="ir.rule">-->
+<!--        <field name="name">Allowing to edit agreement in draft state only</field>-->
+<!--        <field name="model_id" ref="model_agreement"/>-->
+<!--        <field name="domain_force">-->
+<!--            [('state', '=', 'draft')]</field>-->
+<!--        <field name="perm_create" eval="False"/>-->
+<!--        <field name="perm_write" eval="True"/>-->
+<!--        <field name="perm_unlink" eval="False"/>-->
+<!--        <field name="perm_read" eval="False"/>-->
+<!--        <field name="groups" eval="[(4, ref('base.group_user'))]"/>-->
+<!--    </record>-->
 </odoo>

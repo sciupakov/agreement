@@ -11,6 +11,7 @@
     'application': True,
     'data': [
         "data/ir_sequence_data.xml",
+        "data/ir_cron.xml",
         "security/security.xml",
         "security/ir.model.access.csv",
         "views/agreement.xml",
