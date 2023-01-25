@@ -5,7 +5,7 @@ from odoo import models, fields
 
 class AgreementType(models.Model):
     _name = "agreement.type"
-    _inherit = ['mail.thread']
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = "Agreement Type"
 
     name = fields.Char(string="Name", required=True, tracking=True)
