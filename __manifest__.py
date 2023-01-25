@@ -1,7 +1,7 @@
 {
     'name': "Agreement",
     'version': '16.0',
-    'depends': ['base', 'mail'],
+    'depends': ['base', 'mail', 'contacts'],
     'author': "Andrej Ščiupakov",
     'license': 'AGPL-3',
     'description': """
@@ -12,6 +12,7 @@
     'data': [
         "data/ir_sequence_data.xml",
         "data/ir_cron.xml",
+        "data/mail_templates.xml",
         "security/security.xml",
         "security/ir.model.access.csv",
         "views/agreement.xml",

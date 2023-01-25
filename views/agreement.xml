@@ -39,6 +39,7 @@
                 </header>
                 <sheet>
                     <group>
+                        <field name="show_button" attrs="{'invisible':True}"/>
                         <field name="number" attrs="{'readonly':True}"/>
                         <field name="partner_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                         <field name="kind_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>

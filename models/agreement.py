@@ -46,7 +46,8 @@ class Agreement(models.Model):
         self.ensure_one()
         self.state = 'draft'
         # send notification to author
-        self.message_post(body=_('Agreement %s was sent back for revision.'))
+        template = self.env.ref('agreement.agreement_sent_back_email')
+        template.send_mail(self.id)
 
     @api.depends('author_id', 'state')
     def _compute_show_button(self):
