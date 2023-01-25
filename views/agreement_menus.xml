@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <menuitem id="agreement_root" name="Agreements">
-        <menuitem id="agreement_menu" name="Agreements"/>
+        <menuitem id="agreement_menu" name="Agreements" action="agreement_action"/>
         <menuitem id="agreement_settings" name="Settings" groups="agreement.group_agreement_manager">
             <menuitem id="agreement_type_menu"
                       name="Agreement Types"

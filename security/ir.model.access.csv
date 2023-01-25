@@ -1,3 +1,5 @@
 id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
 access_agreement_type_manager,agreement.type.manager,model_agreement_type,agreement.group_agreement_manager,1,1,1,0
 access_agreement_type_user,agreement.type.user,model_agreement_type,agreement.group_agreement_user,1,0,0,0
+access_agreement_manager,agreement.manager,model_agreement,agreement.group_agreement_manager,1,1,1,0
+access_agreement_user,agreement.user,model_agreement,agreement.group_agreement_user,1,1,1,0

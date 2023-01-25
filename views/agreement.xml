@@ -1,4 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record model="ir.ui.view" id="agreement_view_tree">
+        <field name="name">agreement.tree</field>
+        <field name="model">agreement</field>
+        <field name="arch" type="xml">
+            <tree string="Agreement">
+                <field name="number"/>
+                <field name="partner_id"/>
+                <field name="kind_id"/>
+                <field name="state"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="author_id"/>
+            </tree>
+        </field>
+    </record>
 
+    <record model="ir.ui.view" id="agreement_view_form">
+        <field name="name">agreement.form</field>
+        <field name="model">agreement</field>
+        <field name="arch" type="xml">
+            <form string="Agreement Form">
+                <header>
+                    <button name="action_send_for_approval"
+                            string="Send for approval"
+                            type="object"
+                            attrs="{'invisible': [('state', '!=', 'draft'), ('author_id', '!=', 'current_uid')]}"/>
+                    <button name="action_approve" string="Approve"
+                            type="object"
+                            attrs="{'invisible': [('state', '!=', 'in_agreement')]}"
+                            groups="agreement.group_agreement_manager"/>
+                    <button name="action_send_back"
+                            string="Send back for revision"
+                            type="object"
+                            attrs="{'invisible': [('state', '!=', 'in_agreement')]}"
+                            groups="agreement.group_agreement_manager"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,in_agreement,active,finished"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="number"/>
+                        <field name="partner_id"/>
+                        <field name="kind_id"/>
+                        <field name="state"/>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                        <field name="author_id"/>
+                        <field name="current_uid"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="agreement_action" model="ir.actions.act_window">
+        <field name="name">Agreement</field>
+        <field name="res_model">agreement</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 </odoo>
