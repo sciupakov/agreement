@@ -2,7 +2,7 @@
     'name': "Agreement",
     'version': '16.0',
     'depends': ['base', 'mail', 'contacts'],
-    'author': "Andrej Ščiupakov",
+    'author': "Andrej Ščiupakov,",
     'license': 'AGPL-3',
     'description': """
     Test task module
